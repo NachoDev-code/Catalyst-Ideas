@@ -1,91 +1,94 @@
 /**
- * CATALYST IDEAS - Script
- * Maneja el carrusel de subtítulos, testimonios y animaciones
+ * CATALYST IDEAS · script premium
+ * Testimonios en carrusel + smooth scroll + navbar dinámica + reveals
  */
+(function () {
+  'use strict';
 
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
 
-    // ── Carrusel de subtítulos ──────────────────────────────────────────
-    const subtitleTrack = document.getElementById('subtitleTrack');
-    if (subtitleTrack) {
-        const slides = subtitleTrack.querySelectorAll('.subtitle-slide');
-        console.log('✅ Catalyst Ideas cargado correctamente');
-        console.log(`📱 Subtítulos: ${slides.length} opciones`);
-    }
-
-    // ── Smooth scroll para enlaces internos ────────────────────────────
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+    // ── Smooth scroll anchors ─────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (id.length <= 1) return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
 
-    // ── Navbar: sombra dinámica en scroll ──────────────────────────────
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        window.addEventListener('scroll', function () {
-            navbar.style.boxShadow = window.scrollY > 0
-                ? '0 4px 12px rgba(0, 0, 0, 0.15)'
-                : '0 2px 8px rgba(0, 0, 0, 0.1)';
-        });
-    }
-
-    // ── Rastrear clics en botón WhatsApp ───────────────────────────────
-    const ctaButton = document.querySelector('.btn-whatsapp');
-    if (ctaButton) {
-        ctaButton.addEventListener('click', function () {
-            console.log('📞 Usuario iniciando asesoría por WhatsApp');
-        });
-    }
-
-    // ── Rastrear hover en tarjetas de servicios ────────────────────────
-    document.querySelectorAll('.service-card').forEach((card, index) => {
-        card.addEventListener('mouseenter', function () {
-            const title = this.querySelector('.card-title');
-            if (title) {
-                console.log(`🎯 Tarjeta ${index + 1} - ${title.textContent}`);
-            }
-        });
-    });
-
-    // ── Carrusel de testimonios ────────────────────────────────────────
-    const cardsTestimonio = document.querySelectorAll('.testimonio-card');
-    const dotsTestimonio  = document.querySelectorAll('.dot-testimonio');
-    let currentTestimonio = 0;
-
-    function irATestimonio(index) {
-        if (!cardsTestimonio[index]) return;
-
-        cardsTestimonio.forEach(c => c.classList.remove('activo'));
-        cardsTestimonio[index].classList.add('activo');
-
-        if (dotsTestimonio.length > 0 && dotsTestimonio[index]) {
-            dotsTestimonio.forEach(d => d.classList.remove('activo'));
-            dotsTestimonio[index].classList.add('activo');
+    // ── Navbar sombra dinámica ────────────────────────────
+    var nav = document.querySelector('.nav');
+    if (nav) {
+      var onScroll = function () {
+        if (window.scrollY > 8) {
+          nav.style.boxShadow = '0 6px 24px rgba(17,26,23,.08)';
+        } else {
+          nav.style.boxShadow = 'none';
         }
-
-        currentTestimonio = index;
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     }
 
-    // Clicks en dots (si existen en el HTML)
-    dotsTestimonio.forEach((dot, i) => {
-        dot.addEventListener('click', () => irATestimonio(i));
+    // ── Testimonios carrusel ──────────────────────────────
+    var cards = document.querySelectorAll('.testimonio');
+    var dots = document.querySelectorAll('.dot');
+    var current = 0;
+    var timer = null;
+
+    function goTo(i) {
+      if (!cards.length) return;
+      current = (i + cards.length) % cards.length;
+      cards.forEach(function (c, idx) {
+        c.classList.toggle('active', idx === current);
+      });
+      dots.forEach(function (d, idx) {
+        d.classList.toggle('active', idx === current);
+      });
+    }
+
+    function start() {
+      stop();
+      timer = setInterval(function () { goTo(current + 1); }, 5500);
+    }
+    function stop() { if (timer) clearInterval(timer); }
+
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () { goTo(i); start(); });
     });
 
-    // Inicializar estado limpio y arrancar rotación automática
-    if (cardsTestimonio.length > 0) {
-        irATestimonio(0);
-        setInterval(() => {
-            irATestimonio((currentTestimonio + 1) % cardsTestimonio.length);
-        }, 4000);
+    if (cards.length) { goTo(0); start(); }
+
+    // Pausa carrusel cuando la pestaña está oculta
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else start();
+    });
+
+    // ── Reveals on scroll ─────────────────────────────────
+    if ('IntersectionObserver' in window) {
+      var els = document.querySelectorAll(
+        '.section-title, .beneficio, .plan, .faq__item, .problema__inner, .cta__inner'
+      );
+      els.forEach(function (el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        el.style.transition = 'opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1)';
+      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { io.observe(el); });
     }
 
-    // ── Detección de dispositivo ───────────────────────────────────────
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    console.log('📱 Dispositivo:', isMobile ? 'Móvil' : 'Desktop');
-
-});
+    console.log('%c✦ Catalyst Ideas', 'color:#4ade80;font-weight:700;font-size:14px;');
+  });
+})();
