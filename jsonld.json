@@ -1,0 +1,136 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://catalystideas.cl/#organization",
+        "name": "Catalyst Ideas",
+        "url": "https://catalystideas.cl/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://catalystideas.cl/logo.png"
+        },
+        "sameAs": [
+          "https://facebook.com/catalystideas",
+          "https://instagram.com/catalystideas"
+        ]
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://catalystideas.cl/#localbusiness",
+        "name": "Catalyst Ideas",
+        "image": "https://catalystideas.cl/hero.jpg",
+        "url": "https://catalystideas.cl/",
+        "telephone": "+56974330304",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Quillaipe, Carretera Austral",
+          "addressLocality": "Puerto Montt",
+          "addressRegion": "Los Lagos",
+          "postalCode": "5480000",
+          "addressCountry": "CL"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "-41.5245",
+          "longitude": "-72.7483"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://catalystideas.cl/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Por qué no vendo si ya tengo una página web?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tener una página web es solo el primer paso. Si la página no está diseñada con técnicas de conversión (CRO), si no carga rápido, si el botón de contacto es confuso o si no responde a lo que tu cliente busca, las visitas se irán sin comprar. Nosotros analizamos ese comportamiento en tu auditoría."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Por qué mi negocio no aparece en Google?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Para aparecer en Google no basta con existir. Necesitas SEO (Optimización para Motores de Búsqueda). Google debe indexar tu web correctamente y entender que eres relevante para tu zona y rubro. Si no tienes configurados datos como Google Business Profile, Schema.org o Search Console, serás invisible."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Por qué mi competencia aparece antes que yo?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tu competencia probablemente esté haciendo SEO local, tenga una web más rápida, mejor reputación online con opiniones de clientes, o esté utilizando palabras clave estratégicas. La auditoría te muestra exactamente qué está haciendo tu competencia y cómo podemos superarla."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué estoy haciendo mal en mis redes sociales?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Muchas empresas confían únicamente en Instagram o Facebook para vender. Pero las redes sociales no te pertenecen y el algoritmo limita tu alcance orgánico. Además, son plataformas de distracción, no de intención de compra. Una web estratégica capta a la persona cuando ya tiene la intención de comprar."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo me ayuda la auditoría gratuita a mejorar?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La auditoría gratuita no es un simple chequeo automático. Analizamos tu web, SEO local, Google Business Profile y competencia. Te entregamos un informe con los problemas que frenan tus ventas y una lista de mejoras ordenadas por prioridad para que sepas exactamente qué cambiar."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://catalystideas.cl/#service",
+        "serviceType": "Estrategia Digital y SEO Local",
+        "provider": {
+          "@id": "https://catalystideas.cl/#organization"
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Región de Los Lagos, Chile"
+        },
+        "description": "Servicios de auditoría digital, optimización web, SEO local y crecimiento digital para empresas de Puerto Montt y la Carretera Austral."
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://catalystideas.cl/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://catalystideas.cl/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Soluciones",
+            "item": "https://catalystideas.cl/#soluciones"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Auditoría Gratuita",
+            "item": "https://catalystideas.cl/#solicitar-auditoria"
+          }
+        ]
+      }
+    ]
+  }
