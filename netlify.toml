@@ -1,6 +1,6 @@
 [build]
-  command = ""
-  publish = "."
+  command = "node build.js"
+  publish = "dist"
 
 [[headers]]
   for = "/*"
