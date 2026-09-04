@@ -173,4 +173,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // 7. ENTRADA SUAVE Y ESCALONADA DE PROC-CARDS AL HACER SCROLL
+  const processSection = document.querySelector('.process-section');
+  if (processSection && 'IntersectionObserver' in window) {
+    const procObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !processSection.classList.contains('animated-once')) {
+          processSection.classList.add('animated-once');
+          const activePanel = processSection.querySelector('.process-panel.active');
+          if (activePanel) {
+            activePanel.classList.remove('active');
+            void activePanel.offsetWidth; // reiniciar animación fluida
+            activePanel.classList.add('active');
+          }
+        }
+      });
+    }, { threshold: 0.15 });
+    procObserver.observe(processSection);
+  }
 });

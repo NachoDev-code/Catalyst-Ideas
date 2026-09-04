@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 95" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 545 95" width="100%" height="100%">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&amp;display=swap');
@@ -79,8 +79,8 @@
              fill="#00f2fe" opacity="0.3"/>
   </g>
 
-  <!-- TEXTO CATALYST IDEAS CON SEPARACIÓN PERFECTA -->
-  <g transform="translate(155, 58)">
+  <!-- TEXTO CATALYST IDEAS CON SEPARACIÓN ELEGANTE Y PROFESIONAL -->
+  <g transform="translate(182, 58)">
     <text x="0" y="0" class="brand-title">CATALYST</text>
     <!-- Separación limpia de 28px entre la T y la I para evitar solapamientos -->
     <text x="214" y="0" class="brand-accent" filter="url(#textGlow)">IDEAS</text>

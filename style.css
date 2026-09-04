@@ -106,10 +106,35 @@ h1, h2, h3, h4, .brand-text {
 }
 
 .highlight-cyan {
-  background: linear-gradient(135deg, #ffffff 0%, var(--cyan-bright) 50%, var(--cyan-neon) 100%);
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #cffafe 25%,
+    var(--cyan-bright) 60%,
+    #0284c7 100%
+  );
+  background-size: 160% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+  display: inline-block;
+  animation: breatheCyanGlow 4.8s ease-in-out infinite;
+  will-change: filter, opacity;
+}
+
+@keyframes breatheCyanGlow {
+  0%, 100% {
+    /* Estado reposado, sutil y elegante ("suave y sereno") */
+    filter: drop-shadow(0 0 6px rgba(0, 210, 255, 0.18));
+    opacity: 0.88;
+    background-position: 0% center;
+  }
+  50% {
+    /* Brillo suave, agradable y estético (sin llegar a ser incandescente) */
+    filter: drop-shadow(0 0 10px rgba(103, 232, 249, 0.45))
+            drop-shadow(0 0 22px rgba(0, 210, 255, 0.22));
+    opacity: 1;
+    background-position: 100% center;
+  }
 }
 
 /* ==================== BOTONES MODERNOS ==================== */
@@ -495,13 +520,16 @@ h1, h2, h3, h4, .brand-text {
 .hero-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
-  padding: 0.45rem 1.2rem;
+  padding: 0.45rem 1.25rem;
   border-radius: var(--radius-full);
-  background: rgba(0, 210, 255, 0.1);
+  background: rgba(0, 210, 255, 0.08);
   border: 1px solid var(--border-cyan);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   margin-bottom: 1.8rem;
+  max-width: 100%;
 }
 
 .badge-dot {
@@ -511,6 +539,7 @@ h1, h2, h3, h4, .brand-text {
   background-color: var(--cyan-neon);
   box-shadow: 0 0 10px var(--cyan-neon);
   animation: pulseDot 2s infinite ease-in-out;
+  flex-shrink: 0;
 }
 
 @keyframes pulseDot {
@@ -521,7 +550,7 @@ h1, h2, h3, h4, .brand-text {
 .badge-text {
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--cyan-bright);
 }
 
@@ -1023,16 +1052,47 @@ h1, h2, h3, h4, .brand-text {
 
 .process-panel {
   display: none;
-  animation: fadeInProc 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .process-panel.active {
   display: block;
 }
 
-@keyframes fadeInProc {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Animación pausada y progresiva de las tarjetas (duración y cascada de 1 a 1.5s) */
+.process-panel.active .proc-card {
+  animation: procCardEnter 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.process-panel.active .proc-card:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+.process-panel.active .proc-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.process-panel.active .proc-card:nth-child(3) {
+  animation-delay: 0.65s;
+}
+
+.process-panel.active .proc-card:nth-child(4) {
+  animation-delay: 0.9s;
+}
+
+@keyframes procCardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(4px);
+  }
+  60% {
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
 }
 
 .process-grid {
@@ -1264,6 +1324,19 @@ h1, h2, h3, h4, .brand-text {
     --header-height: 70px;
   }
 
+  .header-container {
+    padding: 0 1.2rem;
+  }
+
+  .brand-logo {
+    height: 42px;
+  }
+
+  .logo-img {
+    height: 38px;
+    max-width: 215px;
+  }
+
   .desktop-nav {
     display: none;
   }
@@ -1277,15 +1350,34 @@ h1, h2, h3, h4, .brand-text {
   }
 
   .hero-section {
-    padding-top: calc(var(--header-height) + 1.5rem);
+    padding-top: calc(var(--header-height) + 1.2rem);
     padding-bottom: 3.5rem;
     min-height: auto;
   }
 
+  .hero-badge {
+    padding: 0.38rem 0.95rem;
+    gap: 0.5rem;
+    margin-bottom: 1.35rem;
+    max-width: 95%;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .badge-text {
+    font-size: clamp(0.66rem, 2.7vw, 0.76rem);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
   .hero-title-punch {
-    font-size: 2.3rem;
-    gap: 0.3rem;
-    line-height: 1.12;
+    font-size: clamp(1.95rem, 7.6vw, 2.45rem);
+    gap: 0.35rem;
+    line-height: 1.15;
+    margin-bottom: 1.4rem;
   }
 
   .desktop-break {
@@ -1293,25 +1385,37 @@ h1, h2, h3, h4, .brand-text {
   }
 
   .hero-description {
-    font-size: 1.05rem;
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+    line-height: 1.55;
     margin-bottom: 2rem;
+    padding: 0 0.5rem;
   }
 
   .hero-cta-group {
     flex-direction: column;
     width: 100%;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 0.9rem;
+    margin-bottom: 2.8rem;
   }
 
   .hero-cta-group .btn {
     width: 100%;
+    padding: 0.9rem 1.4rem;
+    font-size: 1rem;
   }
 
   .hero-trust-dock {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
-    padding: 1.2rem;
+    gap: 0.9rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: var(--radius-md);
+  }
+
+  .dock-item {
+    padding: 0.4rem 0.2rem;
   }
 
   .scroll-indicator {
@@ -1347,3 +1451,60 @@ h1, h2, h3, h4, .brand-text {
     text-align: center;
   }
 }
+
+/* Celulares Medianos y Compactos (<= 480px) */
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 1rem;
+  }
+
+  .logo-img {
+    height: 36px;
+    max-width: 200px;
+  }
+
+  .hero-badge {
+    padding: 0.35rem 0.85rem;
+    gap: 0.45rem;
+  }
+
+  .badge-text {
+    font-size: 0.69rem;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-title-punch {
+    font-size: clamp(1.85rem, 7.2vw, 2.15rem);
+  }
+}
+
+/* Celulares Ultra-Compactos (<= 380px como iPhone SE) */
+@media (max-width: 380px) {
+  .header-container {
+    padding: 0 0.8rem;
+  }
+
+  .logo-img {
+    height: 32px;
+    max-width: 175px;
+  }
+
+  .hero-badge {
+    padding: 0.3rem 0.7rem;
+    gap: 0.4rem;
+  }
+
+  .badge-text {
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-title-punch {
+    font-size: 1.72rem;
+  }
+
+  .hero-description {
+    font-size: 0.92rem;
+  }
+}
+
